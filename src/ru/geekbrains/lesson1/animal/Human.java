@@ -5,36 +5,59 @@ import ru.geekbrains.lesson1.enums.Color;
 
 public class Human extends Animal implements Participant {
 
-    public Human(String name, Color color, int age) {
+    private boolean isOnDistance;
+    private int runDistance;
+    private int jumpHeight;
+
+    public Human(String name, Color color, int age, int runDistance, int jumpHeight) {
         super(name, color, age);
+        this.isOnDistance = true;
+        this.runDistance = runDistance;
+        this.jumpHeight = jumpHeight;
     }
 
-    public Human(String name, Color color) {
-        super(name, color, 0);
+
+    @Override
+    public void voice() {
+        System.out.println("Привет");
     }
 
     @Override
     public boolean isOnDistance() {
-        return false; // TODO доработать по аналогии с классом Cat
+        return isOnDistance;
     }
 
     @Override
     public void run(int distance) {
-        // TODO доработать по аналогии с классом Cat
+        if (!isOnDistance) {
+            return;
+        }
+        if (distance > runDistance) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Человек %s пробежал кросс длинной %d", getName(), distance));
     }
 
     @Override
     public void jump(int height) {
-        // TODO доработать по аналогии с классом Cat
+        if (!isOnDistance) {
+            return;
+        }
+        if (height > jumpHeight) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Человек %s пругнул на высоту %d", getName(), height));
     }
 
     @Override
     public void swim(int distance) {
-        // TODO доработать по аналогии с классом Cat
+        isOnDistance = false;
+        System.out.println("Человек не умеет плавать");
     }
 
-    @Override
-    public void voice() {
-        // TODO доработать по аналогии с классом Cat
+    public void setRunDistance(int runDistance) {
+        this.runDistance = runDistance;
     }
 }

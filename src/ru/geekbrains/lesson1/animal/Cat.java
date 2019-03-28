@@ -16,9 +16,6 @@ public class Cat extends Animal implements Participant {
         this.jumpHeight = jumpHeight;
     }
 
-    public Cat(String name, Color color) {
-        super(name, color, 0);
-    }
 
     @Override
     public void voice() {
@@ -51,7 +48,7 @@ public class Cat extends Animal implements Participant {
             isOnDistance = false;
             return;
         }
-        System.out.println(String.format("Собака %s пругнула на высоту %d", getName(), height));
+        System.out.println(String.format("Кошка %s пругнула на высоту %d", getName(), height));
     }
 
     @Override
