@@ -27,12 +27,12 @@ public class Robot implements Participant {
 
     @Override
     public boolean isOnDistance() {
-        return isOnDistance; // TODO доработать по аналогии с классами животных
+        return isOnDistance;
     }
 
     @Override
     public void run(int distance) {
-        // TODO доработать по аналогии с классами животных
+
         if (!isOnDistance) {
             return;
         }
@@ -47,7 +47,7 @@ public class Robot implements Participant {
 
     @Override
     public void jump(int height) {
-        // TODO доработать по аналогии с классами животных
+
         if (!isOnDistance) {
             return;
         }
@@ -62,7 +62,6 @@ public class Robot implements Participant {
 
     @Override
     public void swim(int distance) {
-        // TODO доработать по аналогии с классами животных
         isOnDistance = false;
         System.out.println("Робот не умеет плавать");
     }

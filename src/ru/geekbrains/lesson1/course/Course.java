@@ -15,16 +15,26 @@ public class Course {
     }
 
     public void doIt(Team team) {
+        int indexPart = 0;
+        int indexObs = 0;
         for (Participant participant : team.getParticipants()) {
             for (Obstacle obstacle : obstacles) {
                 obstacle.doIt(participant);
 
                 // если участник сошел с дистанции, то нет смысла двигать его дальше
                 if (!participant.isOnDistance()) {
+                    team.addResult(indexPart,indexObs,0);
                     break;
                 }
+                team.addResult(indexPart,indexObs,1);
+                indexObs++;
             }
             System.out.println();
+            indexPart++;
+            indexObs = 0;
         }
+    }
+    public int getNumOfObstacles(){
+        return obstacles.length;
     }
 }

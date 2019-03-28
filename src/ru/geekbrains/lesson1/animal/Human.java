@@ -12,7 +12,6 @@ public class Human extends Animal {
 
     @Override
     public void voice() {
-        // TODO доработать по аналогии с классом Cat
         System.out.println("Hi");
     }
 }
