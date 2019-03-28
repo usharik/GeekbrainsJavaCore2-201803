@@ -24,6 +24,7 @@ public class Course {
                     break;
                 }
             }
+            System.out.println();
         }
     }
 }

@@ -10,27 +10,69 @@ public class Robot implements Participant {
 
     private String name;
 
+    private boolean isOnDistance;
+    private int runDistance;
+    private int jumpHeight;
+
+    public Robot(String name, int runDistance, int jumpHeight) {
+        this.name = name;
+        this.isOnDistance = true;
+        this.runDistance = runDistance;
+        this.jumpHeight = jumpHeight;
+    }
+
     public Robot(String name) {
         this.name = name;
     }
 
     @Override
     public boolean isOnDistance() {
-        return false; // TODO доработать по аналогии с классами животных
+        return isOnDistance; // TODO доработать по аналогии с классами животных
     }
 
     @Override
     public void run(int distance) {
         // TODO доработать по аналогии с классами животных
+        if (!isOnDistance) {
+            return;
+        }
+        if (distance > runDistance) {
+            isOnDistance = false;
+            System.out.println(String.format("Робот %s Не осилил кросс длинной %d", name, distance));
+            return;
+        }
+        System.out.println(String.format("Робот %s пробежал кросс длинной %d", name, distance));
+
     }
 
     @Override
     public void jump(int height) {
         // TODO доработать по аналогии с классами животных
+        if (!isOnDistance) {
+            return;
+        }
+        if (height > jumpHeight) {
+            isOnDistance = false;
+            System.out.println(String.format("Робот %s Не осилил высоту %d", name, height));
+            return;
+        }
+        System.out.println(String.format("Робот %s прыгнул на высоту %d", name, height));
+
     }
 
     @Override
     public void swim(int distance) {
         // TODO доработать по аналогии с классами животных
+        isOnDistance = false;
+        System.out.println("Робот не умеет плавать");
+    }
+
+    public void setOnDistance(boolean onDistance) {
+        isOnDistance = onDistance;
+    }
+
+    @Override
+    public void speak() {
+        System.out.println("#$%#$%@#$%^$");
     }
 }
