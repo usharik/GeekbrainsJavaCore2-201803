@@ -17,9 +17,6 @@ public abstract class Animal {
     // Перегруженный (overload) конструктор
     public Animal(String name, Color color) {
         this(name, color, 0);
-//        this.name = name;
-//        this.color = color;
-//        this.age = 0;
     }
 
     public abstract void voice();
