@@ -4,14 +4,14 @@ import ru.geekbrains.lesson1.Participant;
 
 public class Water extends Obstacle {
 
-    private int distance;
+    private int length;
 
-    public Water(int distance) {
-        this.distance = distance;
+    public Water(int length) {
+        this.length = length;
     }
 
     @Override
     public void doIt(Participant participant) {
-        participant.swim(this.distance);
+        participant.swim(this.length);
     }
 }
