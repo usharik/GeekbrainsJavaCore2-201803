@@ -16,13 +16,13 @@ public class Cat extends Animal implements Participant {
         this.jumpHeight = jumpHeight;
     }
 
-    public Cat(String name, Color color) {
+/*    public Cat(String name, Color color) {
         super(name, color, 0);
-    }
+    }*/
 
     @Override
     public void voice() {
-        System.out.println("Мяу");
+        System.out.println("мяу");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Cat extends Animal implements Participant {
             isOnDistance = false;
             return;
         }
-        System.out.println(String.format("Кошка %s пробежала кросс длинной %d", getName(), distance));
+        System.out.println(String.format("Кошка %s пробежала кросс длиной %d", getName(), distance));
     }
 
     @Override
@@ -51,14 +51,21 @@ public class Cat extends Animal implements Participant {
             isOnDistance = false;
             return;
         }
-        System.out.println(String.format("Собака %s пругнула на высоту %d", getName(), height));
+        System.out.println(String.format("Кошка %s прыгнула на высоту %d", getName(), height));
     }
 
     @Override
     public void swim(int distance) {
         isOnDistance = false;
-        System.out.println("Кошка не умеет плавать");
+        System.out.println(String.format("Кошка %s не умеет плавать ", getName()));
         // throw new UnsupportedOperationException("Кошка не умеет плавать");
+    }
+
+    @Override
+    public void podium(){
+        System.out.print(String.format("Кошка %s цвета %s прошла дистанцию\nдо конца и радостно заявляет: ", getName(), getColor().getName()));
+        voice();
+        System.out.println(" ");
     }
 
     public void setRunDistance(int runDistance) {

@@ -1,12 +1,12 @@
 package ru.geekbrains.lesson1.enums;
 
 public enum Color {
-    WHITE("Белый"),
-    BLACK("Черный"),
-    BROWN("Коричневый"),
-    GRAY("Серый"),
-    YELLOW("Желтый"),
-    RED("Рыжий");
+    WHITE("белый"),
+    BLACK("черный"),
+    BROWN("коричневый"),
+    GRAY("серый"),
+    YELLOW("желтый"),
+    RED("рыжий");
 
     private String name;
 

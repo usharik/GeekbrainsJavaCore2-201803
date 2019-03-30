@@ -12,4 +12,8 @@ public interface Participant {
     void jump(int height);
 
     void swim(int distance);
+
+    void podium();
+
+
 }
