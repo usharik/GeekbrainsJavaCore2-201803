@@ -79,7 +79,7 @@ public abstract class Animal implements Participant {
 
     @Override
     public String toString() {
-        return name + (isOnDistance() ? " прош(ел/ла) соревнования!" : "не справил(ся/ась) с соревнованиями!");
+        return name + (isOnDistance() ? " прош(ел/ла) соревнования!" : " не справил(ся/ась) с соревнованиями!");
     }
 
     public String getName() {
