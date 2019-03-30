@@ -1,8 +1,5 @@
 package ru.geekbrains.lesson1;
 
-import ru.geekbrains.lesson1.animal.Animal;
-import ru.geekbrains.lesson1.animal.Cat;
-
 /**
  * Класс - комманда участников соревнований
  */

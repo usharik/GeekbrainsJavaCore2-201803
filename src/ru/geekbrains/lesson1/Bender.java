@@ -1,6 +1,6 @@
 package ru.geekbrains.lesson1;
 
-        import ru.geekbrains.lesson1.enums.Color;
+import ru.geekbrains.lesson1.enums.Color;
 
 public class Bender implements Participant {
 
