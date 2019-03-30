@@ -1,36 +1,67 @@
 package ru.geekbrains.lesson1.animal;
 
 import ru.geekbrains.lesson1.Participant;
+import ru.geekbrains.lesson1.enums.Color;
 
-/**
- * Робот не является животным, но может учавствовать в соревнованиях
- * так как реализует интерфейс {@link Participant}
- */
-public class Robot implements Participant {
+public class Robot extends Animal implements Participant {
 
-    private String name;
+    private boolean isOnDistance;
+    private int runDistance;
+    private int jumpHeight;
 
-    public Robot(String name) {
-        this.name = name;
+    public Robot(String name, Color color, int age, int runDistance, int jumpHeight) {
+        super(name, color, age);
+        this.isOnDistance = true;
+        this.runDistance = runDistance;
+        this.jumpHeight = jumpHeight;
+    }
+
+    public Robot(String name, Color color) {
+        super(name, color, 0);
+    }
+
+    @Override
+    public void voice() {
+        System.out.println("0011000101001110010101010101010101011000");
     }
 
     @Override
     public boolean isOnDistance() {
-        return false; // TODO доработать по аналогии с классами животных
+        return isOnDistance;
     }
 
     @Override
     public void run(int distance) {
-        // TODO доработать по аналогии с классами животных
+        if (!isOnDistance) {
+            return;
+        }
+        if (distance > runDistance) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Робот %s пробежал кросс длинной %d", getName(), distance));
     }
 
     @Override
     public void jump(int height) {
-        // TODO доработать по аналогии с классами животных
+        if (!isOnDistance) {
+            return;
+        }
+        if (height > jumpHeight) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Робот %s пругнула на высоту %d", getName(), height));
     }
 
     @Override
     public void swim(int distance) {
-        // TODO доработать по аналогии с классами животных
+        isOnDistance = false;
+        System.out.println("Робот не умеет плавать");
+        // throw new UnsupportedOperationException("Кошка не умеет плавать");
+    }
+
+    public void setRunDistance(int runDistance) {
+        this.runDistance = runDistance;
     }
 }
