@@ -15,12 +15,15 @@ public class Course {
     }
 
     public void doIt(Team team) {
+
         for (Participant participant : team.getParticipants()) {
             for (Obstacle obstacle : obstacles) {
                 obstacle.doIt(participant);
 
                 // если участник сошел с дистанции, то нет смысла двигать его дальше
                 if (!participant.isOnDistance()) {
+                    System.out.println("и сходит с дистанции, не преодолев препятствие");
+                    System.out.println();
                     break;
                 }
             }

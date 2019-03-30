@@ -24,13 +24,14 @@ public abstract class Animal {
 
     public abstract void voice();
 
+
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+/*    public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
     public Color getColor() {
         return color;
@@ -40,7 +41,7 @@ public abstract class Animal {
         return age;
     }
 
-    public void setAge(int age) {
+/*    public void setAge(int age) {
         this.age = age;
-    }
+    }*/
 }
