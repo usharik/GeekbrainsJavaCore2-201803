@@ -1,30 +1,29 @@
-package ru.geekbrains.lesson1.animal;
+package ru.geekbrains.lesson1;
 
-import ru.geekbrains.lesson1.Participant;
 import ru.geekbrains.lesson1.enums.Color;
 
-public abstract class Animal implements Participant {
+public class Bender implements Participant {
 
     private String name;
     private Color color;
-    private int age;
 
     private boolean isOnDistance;
     private int runDistance;
     private int jumpHeight;
     private int swimLength;
 
-    public Animal(String name, Color color, int age, int runDistance, int jumpHeight, int swimLength) {
+    public Bender(String name, Color color, int runDistance, int jumpHeight, int swimLength) {
         this.name = name;
         this.color = color;
-        this.age = age;
         this.runDistance = runDistance;
         this.jumpHeight = jumpHeight;
         this.swimLength = swimLength;
         this.isOnDistance = true;
     }
 
-    public abstract void voice();
+    public void voice(){
+        System.out.println("Я захвачу мир!");
+    }
 
     public boolean isOnDistance() {
         return isOnDistance;
@@ -89,9 +88,4 @@ public abstract class Animal implements Participant {
     public Color getColor() {
         return color;
     }
-
-    public int getAge() {
-        return age;
-    }
-
 }
