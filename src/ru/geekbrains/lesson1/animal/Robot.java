@@ -9,6 +9,22 @@ import ru.geekbrains.lesson1.Participant;
 public class Robot implements Participant {
 
     private String name;
+    private boolean isOnDistance;
+    private int runDistance;
+    private int jumpHeight;
+    private int swimDist;
+
+    public String getName() {
+        return name;
+    }
+
+    public Robot(String name, int runDistance, int jumpHeight, int swimDist) {
+        this.name = name;
+        this.runDistance = runDistance;
+        this.jumpHeight = jumpHeight;
+        this.swimDist = swimDist;
+        this.isOnDistance = true;
+    }
 
     public Robot(String name) {
         this.name = name;
@@ -16,21 +32,52 @@ public class Robot implements Participant {
 
     @Override
     public boolean isOnDistance() {
-        return false; // TODO доработать по аналогии с классами животных
+        return isOnDistance; // TODO доработать по аналогии с классами животных
     }
 
     @Override
     public void run(int distance) {
         // TODO доработать по аналогии с классами животных
+        if (!isOnDistance) {
+            return;
+        }
+        if (distance > runDistance) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Робот %s пробежал кросс длинной %d", getName(), distance));
     }
 
     @Override
     public void jump(int height) {
         // TODO доработать по аналогии с классами животных
+        if (!isOnDistance) {
+            return;
+        }
+        if (height > jumpHeight) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Робот %s прыгнул на высоту %d", getName(), height));
     }
 
     @Override
     public void swim(int distance) {
         // TODO доработать по аналогии с классами животных
+        //isOnDistance = false;
+        //System.out.println("Робот не умеет плавать");
+        if (!isOnDistance) {
+            return;
+        }
+        if (distance > swimDist) {
+            isOnDistance = false;
+            return;
+        }
+        System.out.println(String.format("Робот %s проплыл дистанцию %d метров", getName(), distance));
+    }
+
+    @Override
+    public String getParticipantName() {
+        return this.getName();
     }
 }
