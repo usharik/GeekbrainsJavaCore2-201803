@@ -14,3 +14,4 @@
 * Collections
   * https://habr.com/ru/post/237043/
   * https://www.scientecheasy.com/2018/09/collection-hierarchy-in-java.html
+  * https://www.codejava.net/java-core/collections/overview-of-java-collections-framework-api-uml-diagram
