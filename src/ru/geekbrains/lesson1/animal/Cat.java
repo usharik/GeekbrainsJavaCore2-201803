@@ -61,10 +61,4 @@ public class Cat extends Animal implements Participant {
         // throw new UnsupportedOperationException("Кошка не умеет плавать");
     }
 
-    @Override
-    public void getInfo() {
-        System.out.println("Кошка " + this.getName() + " " + this.getColor().getName() +
-                " цвет с возрастом " + this.getAge());
-    }
-
 }

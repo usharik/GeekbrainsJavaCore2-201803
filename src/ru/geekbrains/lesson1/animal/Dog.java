@@ -29,12 +29,12 @@ public class Dog extends Animal implements Participant {
 
     @Override
     public boolean isOnDistance() {
-        return isOnDistance;
+        return isOnDistance; // TODO доработать по аналогии с классом Cat
     }
 
     @Override
     public void run(int distance) {
-        if (!isOnDistance) {
+        if (!isOnDistance) { // TODO доработать по аналогии с классом Cat
             return;
         }
         if (distance > runDistance) {
@@ -46,7 +46,7 @@ public class Dog extends Animal implements Participant {
 
     @Override
     public void jump(int height) {
-        if (!isOnDistance) {
+        if (!isOnDistance) { // TODO доработать по аналогии с классом Cat
             return;
         }
         if (height > jumpHeight) {
@@ -58,7 +58,7 @@ public class Dog extends Animal implements Participant {
 
     @Override
     public void swim(int distance) {
-        if (!isOnDistance) {
+        if (!isOnDistance) { // TODO доработать по аналогии с классом Cat
             return;
         }
         if (distance > swimDistance) {
@@ -66,11 +66,5 @@ public class Dog extends Animal implements Participant {
             return;
         }
         System.out.println(String.format("Собака %s проплыла на длину %d", getName(), distance));
-    }
-
-    @Override
-    public void getInfo() {
-        System.out.println("Собака " + this.getName() + " " + this.getColor().getName() +
-                " цвет с возрастом " + this.getAge());
     }
 }
