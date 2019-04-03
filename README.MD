@@ -18,3 +18,5 @@
 * Algorithms
   * http://e-maxx.ru
   * http://algolist.ru/
+* IDE setup
+  * [How to assign GitBash to IDEA console on Windows](https://blog.codeleak.pl/2014/02/git-bash-in-intellij-idea-13-on-windows.html)
