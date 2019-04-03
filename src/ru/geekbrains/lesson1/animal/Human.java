@@ -25,17 +25,17 @@ public class Human extends Animal implements Participant {
 
     @Override
     public void voice() {
-        System.out.println("Говорит"); // TODO доработать по аналогии с классом Cat
+        System.out.println("Говорит");
     }
 
     @Override
     public boolean isOnDistance() {
-        return isOnDistance; // TODO доработать по аналогии с классом Cat
+        return isOnDistance;
     }
 
     @Override
     public void run(int distance) {
-        if (!isOnDistance) { // TODO доработать по аналогии с классом Cat
+        if (!isOnDistance) {
             return;
         }
         if (distance > runDistance) {
@@ -47,7 +47,7 @@ public class Human extends Animal implements Participant {
 
     @Override
     public void jump(int height) {
-        if (!isOnDistance) { // TODO доработать по аналогии с классом Cat
+        if (!isOnDistance) {
             return;
         }
         if (height > jumpHeight) {
@@ -59,7 +59,7 @@ public class Human extends Animal implements Participant {
 
     @Override
     public void swim(int distance) {
-        if (!isOnDistance) { // TODO доработать по аналогии с классом Cat
+        if (!isOnDistance) {
             return;
         }
         if (distance > swimDistance) {
@@ -67,6 +67,12 @@ public class Human extends Animal implements Participant {
             return;
         }
         System.out.println(String.format("Человек %s проплыл на длину %d", getName(), distance));
+    }
+
+    @Override
+    public void getInfo() {
+        System.out.println("Человек " + this.getName() + " " + this.getColor().getName() +
+                " цвет с возрастом " + this.getAge());
     }
 
 

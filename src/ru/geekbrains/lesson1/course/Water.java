@@ -7,11 +7,11 @@ public class Water extends Obstacle {
     private int distance;
 
     public Water(int distance) {
-        this.distance = distance; // TODO доработать по аналогии с другими препятствиями
+        this.distance = distance;
     }
 
     @Override
     public void doIt(Participant participant) {
-        participant.swim(this.distance);// TODO доработать по аналогии с другими препятствиями
+        participant.swim(this.distance);
     }
 }

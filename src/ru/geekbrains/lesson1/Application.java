@@ -29,7 +29,6 @@ public class Application {
                 new Dog("Бобик", Color.GRAY, 5, 100, 1, 20),
                 new Human("Джон", Color.WHITE, 20, 100, 3, 25),
                 new Robot("C-3PO", Color.YELLOW, 500, 10, 5)
-                // TODO здесь должны быть участники всех видов (Cat, Dog, Human, Robot)
         );
 
         team.participantsInfo();
