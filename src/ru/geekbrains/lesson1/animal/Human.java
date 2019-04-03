@@ -5,6 +5,8 @@ import ru.geekbrains.lesson1.enums.Color;
 
 public class Human extends Animal implements Participant {
 
+    private boolean isOnDistance;
+
     public Human(String name, Color color, int age) {
         super(name, color, age);
     }
@@ -15,7 +17,7 @@ public class Human extends Animal implements Participant {
 
     @Override
     public boolean isOnDistance() {
-        return false; // TODO доработать по аналогии с классом Cat
+        return isOnDistance; // TODO доработать по аналогии с классом Cat
     }
 
     @Override
@@ -36,5 +38,11 @@ public class Human extends Animal implements Participant {
     @Override
     public void voice() {
         // TODO доработать по аналогии с классом Cat
+    }
+
+    @Override
+    public void getResult() {
+        System.out.println(String.format("Кошка %s %sпрошла полосу препятствий",
+                getName(), isOnDistance ? "" : " не"));
     }
 }

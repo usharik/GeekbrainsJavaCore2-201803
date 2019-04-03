@@ -16,4 +16,19 @@ public class Team {
     public Participant[] getParticipants() {
         return participants;
     }
+
+    public void getResults() {
+        for (Participant part : participants) {
+            part.getResult();
+        }
+
+        // !!! НЕ ПРАВИЛЬНО !!!
+//        for (Participant part : participants) {
+//            if (part instanceof Cat) {
+//
+//            } else if (part instanceof Dog) {
+//
+//            };
+//        }
+    }
 }
