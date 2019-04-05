@@ -8,6 +8,8 @@ import ru.geekbrains.lesson1.Participant;
  */
 public class Robot implements Participant {
 
+    private boolean isOnDistance;
+
     private String name;
 
     public Robot(String name) {
@@ -16,7 +18,7 @@ public class Robot implements Participant {
 
     @Override
     public boolean isOnDistance() {
-        return false; // TODO доработать по аналогии с классами животных
+        return isOnDistance;
     }
 
     @Override
@@ -32,5 +34,11 @@ public class Robot implements Participant {
     @Override
     public void swim(int distance) {
         // TODO доработать по аналогии с классами животных
+    }
+
+    @Override
+    public void getResult() {
+        System.out.println(String.format("Кошка %s %sпрошла полосу препятствий",
+                name, isOnDistance ? "" : " не"));
     }
 }

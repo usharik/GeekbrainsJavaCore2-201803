@@ -8,6 +8,8 @@ public abstract class Animal {
     private Color color;
     private int age;
 
+    protected int dummy;
+
     public Animal(String name, Color color, int age) {
         this.name = name;
         this.color = color;
