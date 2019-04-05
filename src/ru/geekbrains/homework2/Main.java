@@ -26,10 +26,13 @@ public class Main {
     private int sum (String[][] arr) throws MyArraySizeException, MyArrayDataException {
 
         if (arr.length != 4) {
-            throw new MyArraySizeException("Размер массива должен быть 4 на 4");
+            throw new MyArraySizeException();
         }
         int total = 0;
         for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length != 4) {
+                throw new MyArraySizeException();
+            }
             for (int j = 0; j < arr[i].length; j++) {
                 try {
                     total += Integer.parseInt(arr[i][j]);
@@ -57,7 +60,7 @@ public class Main {
     public static void main(String[] args) /*throws MyArraySizeException, MyArrayDataException*/ {
 
         Main arr = new Main();
-        String[][] array = arr.arr1; //для того, чтобы ниже не приходилось менять имя массива
+        String[][] array = arr.arr3; //для того, чтобы ниже не приходилось менять имя массива
         arr.printArr(array);
         try{
             System.out.println("Сумма элементов массива = " + arr.sum(array));
