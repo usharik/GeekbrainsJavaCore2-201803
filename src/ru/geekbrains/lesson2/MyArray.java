@@ -7,8 +7,8 @@ class MyArray{
 
     public static double getArray(String[][] numArr) throws MyArraySizeException, MyArrayDataException{
         int i;
-        double result = 0;
         int status;
+        double result = 0;
 
         if (numArr.length != SIZE_ARR) throw new MyArraySizeException("строк", SIZE_ARR);
         for (i = 0; i < numArr.length; i ++){
