@@ -19,6 +19,9 @@
   * https://blog.idrsolutions.com/2014/05/layout-manager-swing-javafx-tutorial/
   * https://dzone.com/refcardz/javafx-8-1?chapter=1
   * https://www.dummies.com/programming/java/how-to-use-layout-managers-in-java/
+  * http://www.alethis.net/reference/java/swing.html
+  * https://www.baeldung.com/javafx
+  * https://dzone.com/articles/elegant-javafx-example
 * Algorithms
   * http://e-maxx.ru
   * http://algolist.ru/
