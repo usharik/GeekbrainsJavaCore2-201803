@@ -17,7 +17,7 @@ class MyArray{
 
         for (i = 0; i < numArr.length; i++){
             for (int j = 0; j < numArr[i].length; j ++){
-                if (numArr[i][j] == null || !numArr[i][j].matches("^[0-9]*[.,]?[0-9]+$")) status = 0;
+                if (numArr[i][j] == null || !numArr[i][j].matches("^[-+]?[0-9]*[.,]?[0-9]+$")) status = 0;
                 else status = 1;
                 /*try {
                     Integer.parseInt(numArr[i][j]);
