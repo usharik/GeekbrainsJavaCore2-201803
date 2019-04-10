@@ -51,7 +51,6 @@ public class MainWindow extends JFrame {
             }
         });
 
-
         add(sendMessagePanel, BorderLayout.SOUTH);
         setVisible(true);
     }

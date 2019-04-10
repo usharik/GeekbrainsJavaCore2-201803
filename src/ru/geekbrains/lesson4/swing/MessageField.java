@@ -14,7 +14,6 @@ public class MessageField extends JTextField {
         this.yourMessage = yourMessage;
     }
 
-
     @Override
     public String getText() {
         return super.getText();
