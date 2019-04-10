@@ -1,9 +1,6 @@
 package ru.geekbrains.lesson3.hw;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PhoneBook {
 
@@ -37,5 +34,14 @@ public class PhoneBook {
 
         System.out.println(phoneBook.getPhonesByName("Man"));
         System.out.println(phoneBook.getPhonesByName("Man1"));
+
+        Map<int[], int[]> intArrMap = new HashMap<>();
+        Map<List<Integer>, Integer> mapList = new HashMap<>();
+
+        intArrMap.put(new int[] {1, 2}, new int[] {2, 1});
+        System.out.println(intArrMap.get(new int[] {1, 2}));
+
+        mapList.put(Arrays.asList(1, 2), 1);
+        System.out.println(mapList.get(Arrays.asList(1, 2)));
     }
 }

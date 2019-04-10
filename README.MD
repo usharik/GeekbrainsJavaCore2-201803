@@ -22,6 +22,7 @@
   * http://www.alethis.net/reference/java/swing.html
   * https://www.baeldung.com/javafx
   * https://dzone.com/articles/elegant-javafx-example
+  * http://tutorials.jenkov.com/javafx/index.html
 * Algorithms
   * http://e-maxx.ru
   * http://algolist.ru/
