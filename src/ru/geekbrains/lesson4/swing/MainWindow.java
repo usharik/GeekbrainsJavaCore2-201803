@@ -9,16 +9,20 @@ import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
 
+    JTextArea messagesArea;
+    JTextField messageField;
+
     public MainWindow() {
-        setTitle("Application");
+        setTitle("Чак-Чак");
         setBounds(200,200, 500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
 
-        JTextArea messagesArea = new JTextArea();
+        messagesArea = new JTextArea();
         messagesArea.setLineWrap(true);
         messagesArea.setWrapStyleWord(true);
+        messagesArea.setEditable(false);
 
         JScrollPane scroll = new JScrollPane(messagesArea,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -28,19 +32,34 @@ public class MainWindow extends JFrame {
         JPanel sendMessagePanel = new JPanel();
         sendMessagePanel.setLayout(new BorderLayout());
         JButton sendButton = new JButton("Отправить");
+
+        sendMessagePanel.add(sendButton, BorderLayout.EAST);
+        messageField = new MessageField();
+
+        messageField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    sendMessage(messageField.getText());
+            }
+        });
+        sendMessagePanel.add(messageField, BorderLayout.CENTER);
+
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MainWindow.this,
-                        "Message", "Title", JOptionPane.INFORMATION_MESSAGE);
+                sendMessage(messageField.getText());
             }
         });
-        sendMessagePanel.add(sendButton, BorderLayout.EAST);
-        JTextField messageField = new JTextField();
-        sendMessagePanel.add(messageField, BorderLayout.CENTER);
+
 
         add(sendMessagePanel, BorderLayout.SOUTH);
-
         setVisible(true);
+    }
+
+    public void sendMessage(String yourMessage) {
+        messagesArea.append("Вы: " + yourMessage);
+        messageField.setText("");
+        messagesArea.append("\n");
+        messageField.grabFocus();
     }
 }
