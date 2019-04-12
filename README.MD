@@ -23,6 +23,7 @@
   * https://www.baeldung.com/javafx
   * https://dzone.com/articles/elegant-javafx-example
   * http://tutorials.jenkov.com/javafx/index.html
+  * https://stackoverflow.com/questions/16977100/confgure-margin-for-individual-element-via-java-fx-css
 * Algorithms
   * http://e-maxx.ru
   * http://algolist.ru/
