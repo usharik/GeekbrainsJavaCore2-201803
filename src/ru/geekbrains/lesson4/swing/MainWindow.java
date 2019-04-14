@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
         messagesArea.setWrapStyleWord(true);
         messagesArea.setEditable(false);
 
-        JScrollPane scroll = new JScrollPane(messagesList,
+        JScrollPane scroll = new JScrollPane(messagesArea,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll, BorderLayout.CENTER);
