@@ -1,5 +1,6 @@
 package ru.geekbrains.lesson4.swing;
 
+
 import javafx.beans.value.ChangeListener;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
+
 
     JTextArea messagesArea;
     JTextField messageField;
@@ -24,7 +26,7 @@ public class MainWindow extends JFrame {
         messagesArea.setWrapStyleWord(true);
         messagesArea.setEditable(false);
 
-        JScrollPane scroll = new JScrollPane(messagesArea,
+        JScrollPane scroll = new JScrollPane(messagesList,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll, BorderLayout.CENTER);
