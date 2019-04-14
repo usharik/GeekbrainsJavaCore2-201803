@@ -30,12 +30,12 @@ public class MainWindow extends JFrame {
         messagesArea.setEditable(false);
 
 
-        scroll = new JScrollPane(messagesList,
+        JScrollPane scroll = new JScrollPane(messagesArea,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll, BorderLayout.CENTER);
 
-        sendMessagePanel = new JPanel();
+        JPanel sendMessagePanel = new JPanel();
         sendMessagePanel.setLayout(new BorderLayout());
 
         JButton sendButton = new JButton("Отправить");
