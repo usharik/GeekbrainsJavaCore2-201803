@@ -8,7 +8,7 @@ public class Main {
         int m = 10;
         for (int i = 0; i < arrStr.length; i++){
             for (int j = 0; j < arrStr[i].length; j ++){
-                arrStr[i][j] = "-" + m + ".5r";
+                arrStr[i][j] = "-" + m + ".5";
                 m++;
                 System.out.print(arrStr[i][j] + " ");
             }
