@@ -3,7 +3,6 @@ package ru.geekbrains.lesson4.swing;
 
 import javafx.beans.value.ChangeListener;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,6 @@ public class MainWindow extends JFrame {
     JTextArea messagesArea;
     JTextField messageField;
 
-
     public MainWindow() {
         setTitle("Чак-Чак");
         setBounds(200,200, 500, 500);
@@ -23,12 +21,10 @@ public class MainWindow extends JFrame {
 
         setLayout(new BorderLayout());
 
-
         messagesArea = new JTextArea();
         messagesArea.setLineWrap(true);
         messagesArea.setWrapStyleWord(true);
         messagesArea.setEditable(false);
-
 
         JScrollPane scroll = new JScrollPane(messagesArea,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -37,7 +33,6 @@ public class MainWindow extends JFrame {
 
         JPanel sendMessagePanel = new JPanel();
         sendMessagePanel.setLayout(new BorderLayout());
-
         JButton sendButton = new JButton("Отправить");
 
         sendMessagePanel.add(sendButton, BorderLayout.EAST);
@@ -49,7 +44,6 @@ public class MainWindow extends JFrame {
                     sendMessage(messageField.getText());
             }
         });
-
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
 
         sendButton.addActionListener(new ActionListener() {
