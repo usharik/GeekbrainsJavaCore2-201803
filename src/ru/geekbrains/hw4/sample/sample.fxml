@@ -1,0 +1,29 @@
+<?scanebuilder-stylesheet /css/Style.css?>
+<?scanebuilder-stylesheet /css/Style_pink.css?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox fx:controller="ru.geekbrains.hw4.sample.Controller"
+      xmlns:fx="http://javafx.com/fxml" alignment="center" stylesheets="@/ru/geekbrains/hw4/sample/css/Style.css" fx:id="test">
+    <TextArea fx:id="textAreaField" editable="false" VBox.vgrow="ALWAYS"/>
+
+    <HBox>
+        <TextField fx:id="textField" onAction="#SendMsg" HBox.hgrow="ALWAYS" promptText="Введите сообщение"/>
+        <Button text="Send" fx:id="btn1" onAction="#SendMsg"/>
+    </HBox>
+    <HBox>
+        <fx:define>
+            <ToggleGroup fx:id="style" />
+        </fx:define>
+        <Label text="Стиль: "></Label>
+        <children>
+            <RadioButton toggleGroup="$style" fx:id="RadioBtnNone" onAction="#NewStyle"/>
+            <RadioButton toggleGroup="$style" fx:id="RadioBtnPink" onAction="#NewStyle"/>
+            <RadioButton toggleGroup="$style" fx:id="RadioBtnBlue" onAction="#NewStyle"/>
+            <RadioButton toggleGroup="$style" fx:id="RadioBtnGreen" onAction="#NewStyle"/>
+            <RadioButton toggleGroup="$style" fx:id="RadioBtnYellow" onAction="#NewStyle"/>
+            <RadioButton toggleGroup="$style" fx:id="RadioBtnGrey" onAction="#NewStyle"/>
+        </children>
+
+    </HBox>
+</VBox>
