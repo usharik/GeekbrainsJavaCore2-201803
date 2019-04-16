@@ -15,6 +15,15 @@
   * https://habr.com/ru/post/237043/
   * https://www.scientecheasy.com/2018/09/collection-hierarchy-in-java.html
   * https://www.codejava.net/java-core/collections/overview-of-java-collections-framework-api-uml-diagram
+* UI with JavaFX and Swing
+  * https://blog.idrsolutions.com/2014/05/layout-manager-swing-javafx-tutorial/
+  * https://dzone.com/refcardz/javafx-8-1?chapter=1
+  * https://www.dummies.com/programming/java/how-to-use-layout-managers-in-java/
+  * http://www.alethis.net/reference/java/swing.html
+  * https://www.baeldung.com/javafx
+  * https://dzone.com/articles/elegant-javafx-example
+  * http://tutorials.jenkov.com/javafx/index.html
+  * https://stackoverflow.com/questions/16977100/confgure-margin-for-individual-element-via-java-fx-css
 * Algorithms
   * http://e-maxx.ru
   * http://algolist.ru/
