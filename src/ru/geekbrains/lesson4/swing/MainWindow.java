@@ -58,9 +58,14 @@ public class MainWindow extends JFrame {
     }
 
     public void sendMessage(String yourMessage) {
-        messagesArea.append("Вы: " + yourMessage);
-        messageField.setText("");
-        messagesArea.append("\n");
-        messageField.grabFocus();
+        String null_msg = "";
+        if (!(yourMessage.equals(null_msg))) {
+            messagesArea.append("Вы: " + yourMessage);
+            messageField.setText("");
+            messagesArea.append("\n");
+            messageField.grabFocus();
+        } else {
+            messageField.grabFocus();
+        }
     }
 }
