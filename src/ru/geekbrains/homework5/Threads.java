@@ -5,7 +5,7 @@ public class Threads {
     static final int size = 10000000;
     static final int h = size / 2;
 
-    private static synchronized void calc(float[] arr){
+    private static void calc(float[] arr){
 
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (float)(arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
@@ -42,8 +42,6 @@ public class Threads {
             }
         });
         t1.start();
-        t1.join();
-
 
         Thread t2 = new Thread(new Runnable() {
             @Override
@@ -52,6 +50,8 @@ public class Threads {
             }
         });
         t2.start();
+
+        t1.join();
         t2.join();
 
 
