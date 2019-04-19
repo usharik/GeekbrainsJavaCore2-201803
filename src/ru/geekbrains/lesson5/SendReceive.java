@@ -16,7 +16,7 @@ public class SendReceive {
         }
         packetReady = true;
         this.packet = packet;
-        notifyAll();
+        notify();
     }
 
     public synchronized String recieve() {
@@ -28,7 +28,7 @@ public class SendReceive {
             }
         }
         packetReady = false;
-        notifyAll();
+        notify();
         return packet;
     }
 }
