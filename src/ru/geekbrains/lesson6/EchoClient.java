@@ -47,6 +47,7 @@ public class EchoClient {
             });
             thrSend.start();
             thrGet.start();
+            
             thrSend.join();
             thrGet.join();
 

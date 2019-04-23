@@ -10,25 +10,6 @@ import java.util.Scanner;
 
 public class EchoServer {
 
-    static class GetMail implements Runnable{
-
-        DataInputStream in;
-
-        public GetMail(DataInputStream in){
-          this.in = in;
-        }
-
-        @Override
-        public void run(){
-            try {
-                System.out.println("Новое сообщение > " + in.readUTF());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-
 
     public static void main(String[] args) throws InterruptedException {
         try (Scanner scanner = new Scanner(System.in);
@@ -61,7 +42,6 @@ public class EchoServer {
                 Thread thrSend = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        //System.out.print("Введите сообщение > ");
                         while (scanner.hasNextLine()) {
                             System.out.print("Введите сообщение > ");
                             String line = scanner.nextLine();
@@ -78,14 +58,9 @@ public class EchoServer {
 
                     thrSend.start();
                     thrGet.start();
+
                     thrGet.join();
                     thrSend.join();
-                    /*try {
-                        System.out.println("Новое сообщение > " + in.readUTF());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        break;
-                    }*/
 
             }
         } catch (IOException ex) {
