@@ -22,13 +22,19 @@ public class SocketHandler {
         sendThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try (Scanner sc = new Scanner(System.in);
-                     DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream())) {
+                Scanner sc = new Scanner(System.in);
+                try (DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream())) {
                     do {
                         System.out.print("Введите сообщение > ");
+
+                        while (!sc.hasNextLine()) ;
+
                         String msg = sc.nextLine();
+                        if (socket.isClosed()) {
+                            break;
+                        }
                         outputStream.writeUTF(msg);
-                    } while (true);
+                    } while (!Thread.currentThread().isInterrupted());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -40,7 +46,13 @@ public class SocketHandler {
             public void run() {
                 try (DataInputStream inputStream = new DataInputStream(socket.getInputStream())) {
                     while (true) {
-                        System.out.printf("%nНовое сообщение > %s%n", inputStream.readUTF());
+                        String msg = inputStream.readUTF();
+                        if (msg.equalsIgnoreCase("/end")) {
+                            System.out.println("Пришел сигнал завершения");
+                            sendThread.interrupt();
+                            break;
+                        }
+                        System.out.printf("%nНовое сообщение > %s%n", msg);
                         System.out.print("Введите сообщение > ");
                     }
                 } catch (IOException ex) {
@@ -55,7 +67,6 @@ public class SocketHandler {
 
     public void join() {
         try {
-            sendThread.join();
             receiveThread.join();
         } catch (InterruptedException ex) {
             ex.printStackTrace();

@@ -4,8 +4,11 @@ import ru.geekbrains.lesson4.TextMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 
 public class TextMessageCellRenderer extends JPanel implements ListCellRenderer<TextMessage> {
+
+    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private final JLabel created;
 
@@ -13,12 +16,19 @@ public class TextMessageCellRenderer extends JPanel implements ListCellRenderer<
 
     private final JTextArea messageText;
 
+    private final JPanel panel;
+
     public TextMessageCellRenderer() {
+        super();
         setLayout(new BorderLayout());
 
         created = new JLabel();
         userName = new JLabel();
         messageText = new JTextArea();
+        panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        panel.add(created);
+        panel.add(userName);
 
         Font f = userName.getFont();
         userName.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
@@ -27,9 +37,8 @@ public class TextMessageCellRenderer extends JPanel implements ListCellRenderer<
         messageText.setWrapStyleWord(true);
         messageText.setEditable(false);
 
-        add(created, BorderLayout.EAST);
-        add(userName, BorderLayout.NORTH);
-        add(messageText, BorderLayout.WEST);
+        add(panel, BorderLayout.NORTH);
+        add(messageText, BorderLayout.SOUTH);
     }
 
     @Override
@@ -37,9 +46,9 @@ public class TextMessageCellRenderer extends JPanel implements ListCellRenderer<
                                                   TextMessage value, int index,
                                                   boolean isSelected, boolean cellHasFocus) {
         setBackground(list.getBackground());
-        created.setText(value.getCreated().toString());
+        created.setText(value.getCreated().format(timeFormatter));
         userName.setOpaque(true);
-        userName.setText(value.getUserName());
+        userName.setText(value.getUserFrom());
         messageText.setText(value.getText());
         return this;
     }
