@@ -7,19 +7,31 @@ import java.util.Scanner;
 
 public class EchoClient {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         try (Scanner scanner = new Scanner(System.in);
              Socket socket = new Socket("localhost", 7777)) {
 
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-            System.out.print("Введите сообщение > ");
-            while (scanner.hasNextLine()) {
-                System.out.print("Введите сообщение > ");
-                String line = scanner.nextLine();
-                out.writeUTF(line);
-            }
+            Thread thr = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.print("Введите сообщение > ");
+                    while (scanner.hasNextLine()) {
+                        System.out.print("Введите сообщение > ");
+                        String line = scanner.nextLine();
+                        try {
+                            out.writeUTF(line);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            thr.start();
+            thr.join();
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
