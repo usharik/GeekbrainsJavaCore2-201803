@@ -1,6 +1,7 @@
 package ru.geekbrains.lesson4.swing;
 
-import ru.geekbrains.lesson4.TextMessage;
+
+import javafx.beans.value.ChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,58 +10,62 @@ import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
 
-    private final JList<TextMessage> messagesList;
 
-    private final DefaultListModel<TextMessage> messageListModel;
-
-    private final TextMessageCellRenderer messageCellRenderer;
-
-    private final JScrollPane scroll;
-
-    private final JPanel sendMessagePanel;
-
-    private final JButton sendButton;
-
-    private final JTextField messageField;
+    JTextArea messagesArea;
+    JTextField messageField;
 
     public MainWindow() {
-        setTitle("Application");
+        setTitle("Чак-Чак");
         setBounds(200,200, 500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
 
-        messagesList = new JList<>();
-        messageListModel = new DefaultListModel<>();
-        messageCellRenderer = new TextMessageCellRenderer();
-        messagesList.setModel(messageListModel);
-        messagesList.setCellRenderer(messageCellRenderer);
+        messagesArea = new JTextArea();
+        messagesArea.setLineWrap(true);
+        messagesArea.setWrapStyleWord(true);
+        messagesArea.setEditable(false);
 
-        scroll = new JScrollPane(messagesList,
+        JScrollPane scroll = new JScrollPane(messagesArea,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll, BorderLayout.CENTER);
 
-        sendMessagePanel = new JPanel();
+        JPanel sendMessagePanel = new JPanel();
         sendMessagePanel.setLayout(new BorderLayout());
-        sendButton = new JButton("Отправить");
+        JButton sendButton = new JButton("Отправить");
+
+        sendMessagePanel.add(sendButton, BorderLayout.EAST);
+        messageField = new MessageField();
+
+        messageField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    sendMessage(messageField.getText());
+            }
+        });
+        sendMessagePanel.add(messageField, BorderLayout.CENTER);
+
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String text = messageField.getText();
-                if (text != null && !text.trim().isEmpty()) {
-                    TextMessage msg = new TextMessage("Вы", text);
-                    messageListModel.add(messageListModel.size(), msg);
-                    messageField.setText(null);
-                }
+                sendMessage(messageField.getText());
             }
         });
-        sendMessagePanel.add(sendButton, BorderLayout.EAST);
-        messageField = new JTextField();
-        sendMessagePanel.add(messageField, BorderLayout.CENTER);
 
         add(sendMessagePanel, BorderLayout.SOUTH);
-
         setVisible(true);
+    }
+
+    public void sendMessage(String yourMessage) {
+        String null_msg = "";
+        if (!(yourMessage.equals(null_msg))) {
+            messagesArea.append("Вы: " + yourMessage);
+            messageField.setText("");
+            messagesArea.append("\n");
+            messageField.grabFocus();
+        } else {
+            messageField.grabFocus();
+        }
     }
 }
