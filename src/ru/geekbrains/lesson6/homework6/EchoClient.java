@@ -17,6 +17,5 @@ public class EchoClient {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 }

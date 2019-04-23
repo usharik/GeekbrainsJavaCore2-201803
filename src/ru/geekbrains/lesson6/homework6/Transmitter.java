@@ -33,7 +33,6 @@ public class Transmitter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }
