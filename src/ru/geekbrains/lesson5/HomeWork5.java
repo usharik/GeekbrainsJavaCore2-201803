@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class HomeWork5 {
 
     static final int SIZE = 10_000_000;
-    static final int THREAD_COUNT = 128;
+    static final int THREAD_COUNT = 2;
 
     static void calculate(float[] arr, int shift) {
         for (int i = 0; i < arr.length; i++) {
