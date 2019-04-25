@@ -1,7 +1,5 @@
 package ru.geekbrains.lesson6;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,19 +12,9 @@ public class EchoServer {
                 System.out.println("Сервер ожидает подключения!");
                 Socket socket = serverSocket.accept();
 
-                System.out.println("Кто-то подключился: " + socket.getInetAddress());
-
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-                while (true) {
-                    try {
-                        System.out.println("Новое сообщение > " + in.readUTF());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        break;
-                    }
-                }
+                System.out.println("Подключился новый клиент!");
+                SocketHandler socketHandler = new SocketHandler(socket);
+                socketHandler.start();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
