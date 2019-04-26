@@ -33,11 +33,11 @@ public class Network {
                 while (true) {
                     try {
                         String text = in.readUTF();
-
-                        // TODO проверить, пришло ли в строке text сообщение
-                        // TODO определить текст и отправителя
-                        TextMessage textMessage = new TextMessage("", login, "");
-                        messageReciever.submitMessage(textMessage);
+                        String[] textParts = text.split(" ");
+                        if (textParts.length == 3 && textParts[0].equals("/w")) {
+                            TextMessage textMessage = new TextMessage(textParts[1], login, textParts[2]);
+                            messageReciever.submitMessage(textMessage);
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();

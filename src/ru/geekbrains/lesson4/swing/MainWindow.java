@@ -3,6 +3,7 @@ package ru.geekbrains.lesson4.swing;
 import ru.geekbrains.lesson4.MessageReciever;
 import ru.geekbrains.lesson4.Network;
 import ru.geekbrains.lesson4.TextMessage;
+import ru.geekbrains.lesson7.ChatServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,10 +26,17 @@ public class MainWindow extends JFrame implements MessageReciever {
 
     private final JTextField messageField;
 
+    private final JTextField toUserField;
+
     private final Network network;
 
+
     public MainWindow() {
-        setTitle("Application");
+
+        this.network = new Network("localhost", 7777, this);
+
+        setTitle(this.network.getLogin());      //не работает... даже понял почему, но не успеваю решить данную проблему,
+                                                //если есть возможность обновить окно после аутетификации
         setBounds(200,200, 500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,6 +53,7 @@ public class MainWindow extends JFrame implements MessageReciever {
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(scroll, BorderLayout.CENTER);
 
+
         sendMessagePanel = new JPanel();
         sendMessagePanel.setLayout(new BorderLayout());
         sendButton = new JButton("Отправить");
@@ -52,24 +61,31 @@ public class MainWindow extends JFrame implements MessageReciever {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = messageField.getText();
-                if (text != null && !text.trim().isEmpty()) {
-                    TextMessage msg = new TextMessage(network.getLogin(), "ivan", text);
-                    messageListModel.add(messageListModel.size(), msg);
-                    messageField.setText(null);
-
-                    // TODO реализовать проверку, что сообщение не пустое
-                    network.sendTextMessage(msg);
+                String userTo = toUserField.getText();
+                if (text.isEmpty() || userTo.isEmpty() || text.trim().isEmpty()){
+                JOptionPane.showMessageDialog(MainWindow.this,
+                        "Введите имя адресата либо сообщение",
+                        "Пустое поле",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
                 }
+                TextMessage msg = new TextMessage(network.getLogin(), userTo, text);
+                messageListModel.add(messageListModel.size(), msg);
+                messageField.setText(null);
+                network.sendTextMessage(msg);
             }
         });
+
+        toUserField = new JTextField();
+        toUserField.setPreferredSize(new Dimension(50, 0));
+        sendMessagePanel.add(toUserField, BorderLayout.WEST);
         sendMessagePanel.add(sendButton, BorderLayout.EAST);
         messageField = new JTextField();
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
 
         add(sendMessagePanel, BorderLayout.SOUTH);
-        setVisible(true);
 
-        this.network = new Network("localhost", 7777, this);
+        setVisible(true);
 
         LoginDialog loginDialog = new LoginDialog(this, network);
         loginDialog.setVisible(true);
