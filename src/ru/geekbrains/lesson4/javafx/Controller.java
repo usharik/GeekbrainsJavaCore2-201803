@@ -7,8 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ru.geekbrains.lesson4.MessageReciever;
+import ru.geekbrains.lesson4.TextMessage;
 
-public class Controller {
+public class Controller implements MessageReciever {
 
     @FXML
     public TextArea messages;
@@ -57,5 +59,20 @@ public class Controller {
         alert.setContentText(message);
 
         alert.showAndWait();
+    }
+
+    @Override
+    public void submitMessage(TextMessage message) {
+
+    }
+
+    @Override
+    public void userConnected(String login) {
+
+    }
+
+    @Override
+    public void userDisconnected(String login) {
+
     }
 }
