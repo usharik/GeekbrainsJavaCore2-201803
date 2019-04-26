@@ -30,13 +30,15 @@ public class ClientHandler {
                     try {
                         String msg = inp.readUTF();
                         System.out.printf("Message from user %s: %s%n", login, msg);
-
-                        // TODO проверить является ли msg сообщением для пользователя
-                        // TODO если да, то переслать это сообщение пользователю
-                        String userTo = "";
-                        String message = "";
-                        sendMessage(userTo, message);
-                        chatServer.sendMessage(userTo, login, message);
+                        String[] parsed = msg.split(" ",3);
+                        // проверить является ли msg сообщением для пользователя
+                        // если да, то переслать это сообщение пользователю
+                        if (parsed[0].equals("/w")) {
+                            String userTo = parsed[1];
+                            String message = parsed[2];
+                            //sendMessage(userTo, message);
+                            chatServer.sendMessage(userTo, login, message);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                         break;

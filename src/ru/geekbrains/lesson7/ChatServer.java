@@ -73,7 +73,16 @@ public class ChatServer {
 
     public void sendMessage(String userTo, String userFrom, String msg) {
         ClientHandler userToClientHandler = clientHandlerMap.get(userTo);
-        // TODO убедиться, что userToClientHandler существует и отправить сообщение
-        // TODO для отправки сообщения нужно вызвать метод userToClientHandler.sendMessage()
+        // убедиться, что userToClientHandler существует и отправить сообщение
+        // для отправки сообщения нужно вызвать метод userToClientHandler.sendMessage()
+        try {
+            if (userToClientHandler != null) {
+                userToClientHandler.sendMessage(userFrom, msg);
+            } else {
+                clientHandlerMap.get(userFrom).sendMessage("ChatServer","Аботент " + userTo + " недоступен");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
