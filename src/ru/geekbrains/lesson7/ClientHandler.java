@@ -31,12 +31,14 @@ public class ClientHandler {
                         String msg = inp.readUTF();
                         System.out.printf("Message from user %s: %s%n", login, msg);
 
-                        // TODO проверить является ли msg сообщением для пользователя
-                        // TODO если да, то переслать это сообщение пользователю
-                        String userTo = "";
-                        String message = "";
-                        sendMessage(userTo, message);
-                        chatServer.sendMessage(userTo, login, message);
+                        String[] msgParts = msg.split(" ");
+                        if (msgParts.length == 3 && msgParts[0].equals("/w")) {
+                            String userTo = msgParts[1];
+                            String message = msgParts[2];
+                            sendMessage(userTo, message);
+                            chatServer.sendMessage(userTo, login, message);
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         break;

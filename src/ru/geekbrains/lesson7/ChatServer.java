@@ -31,7 +31,6 @@ public class ChatServer {
                 DataInputStream inp = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 System.out.println("New client connected!");
-
                 User user = null;
                 try {
                     String authMessage = inp.readUTF();
@@ -71,9 +70,13 @@ public class ChatServer {
         return new User(authParts[1], authParts[2]);
     }
 
-    public void sendMessage(String userTo, String userFrom, String msg) {
+    public void sendMessage(String userTo, String userFrom, String msg) throws IOException {
         ClientHandler userToClientHandler = clientHandlerMap.get(userTo);
-        // TODO убедиться, что userToClientHandler существует и отправить сообщение
-        // TODO для отправки сообщения нужно вызвать метод userToClientHandler.sendMessage()
+        if (userToClientHandler != null) {
+            userToClientHandler.sendMessage(userFrom, msg);
+            return;
+        }
+
     }
+
 }
