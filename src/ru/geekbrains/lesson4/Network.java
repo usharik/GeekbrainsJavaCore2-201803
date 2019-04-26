@@ -33,12 +33,13 @@ public class Network {
                 while (true) {
                     try {
                         String text = in.readUTF();
-
-                        // TODO проверить, пришло ли в строке text сообщение
-                        // TODO определить текст и отправителя
-                        TextMessage textMessage = new TextMessage("", login, "");
-                        messageReciever.submitMessage(textMessage);
-
+                        //проверить, пришло ли в строке text сообщение
+                        //определить текст и отправителя
+                        String[] parsed = text.split(" ",3);
+                        if (parsed[0].equals("/w")) {
+                            TextMessage textMessage = new TextMessage(parsed[1], login, parsed[2]);
+                            messageReciever.submitMessage(textMessage);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                         if (socket.isClosed()) {
