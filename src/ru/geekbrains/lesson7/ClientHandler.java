@@ -69,4 +69,10 @@ public class ClientHandler {
             out.writeUTF(String.format(CONNECTED_SEND, login));
         }
     }
+
+    public void sendDisconnectedMessage(String login) throws IOException {
+        if (socket.isConnected()) {
+            out.writeUTF(String.format(DISCONNECTED_SEND, login));
+        }
+    }
 }

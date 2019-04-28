@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,13 +45,21 @@ public class Network implements Closeable {
                         }
 
                         System.out.println("Connection message " + text);
-                        String login = parseConnectedMessage(text);
-                        if (login != null) {
+                        String loginConnected = parseConnectedMessage(text);
+                        if (loginConnected != null) {
+                            messageReciever.userDisconnected(login);
+                            continue;
+                        }
+
+                        System.out.println("Disconnection message " + text);
+                        String loginDisconected = parseDisconnectedMessage(text);
+                        if (loginDisconected != null) {
                             messageReciever.userConnected(login);
                             continue;
                         }
 
                         // TODO добавить обработку отключения пользователя
+                        // DONE
                     } catch (IOException e) {
                         e.printStackTrace();
                         if (socket.isClosed()) {
@@ -90,9 +99,22 @@ public class Network implements Closeable {
         }
     }
 
-    public List<String> requestConnectedUserList() {
+    public List<String> requestConnectedUserList() throws IOException {
         // TODO реализовать запрос с сервера списка всех подключенных пользователей
-        return Collections.emptyList();
+        // DONE
+        List<String> allConnectedUsersList = new ArrayList<>();
+
+        sendMessage(ALLCONNECTED_USERS);
+
+        String response = in.readUTF();
+
+        String[] allUsersArrParsed = parseAllConnectedUsersMessage(response);
+
+        for (int i = 1; i < allUsersArrParsed.length; i++) {
+            allConnectedUsersList.add(allUsersArrParsed[i]);
+        }
+
+        return allConnectedUsersList;
     }
 
     public String getLogin() {

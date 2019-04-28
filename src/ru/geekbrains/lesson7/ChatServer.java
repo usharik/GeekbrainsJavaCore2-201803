@@ -47,7 +47,7 @@ public class ChatServer {
                     out.flush();
                     socket.close();
                 }
-                if (user != null && authService.authUser(user)) {
+                if (user != null && authService.authUser(user) && clientHandlerMap.get(user.getLogin()) == null) {
                     System.out.printf("User %s authorized successful!%n", user.getLogin());
                     subscribe(user.getLogin(), socket);
                     out.writeUTF(AUTH_SUCCESS_RESPONSE);
@@ -84,6 +84,15 @@ public class ChatServer {
         }
     }
 
+    private void sendUserDisconectedMessage(String login) throws IOException {
+        for (ClientHandler clientHandler : clientHandlerMap.values()) {
+            if (!clientHandler.getLogin().equals(login)) {
+                System.out.printf("Sending disconnect notification to %s about %s%n", clientHandler.getLogin(), login);
+                clientHandler.sendDisconnectedMessage(login);
+            }
+        }
+    }
+
     public void sendMessage(TextMessage msg) throws IOException {
         ClientHandler userToClientHandler = clientHandlerMap.get(msg.getUserTo());
         if (userToClientHandler != null) {
@@ -95,12 +104,17 @@ public class ChatServer {
 
     public void subscribe(String login, Socket socket) throws IOException {
         // TODO Проверить, подключен ли уже пользователь. Если да, то отправить клиенту ошибку
+        // DONE.
+
         clientHandlerMap.put(login, new ClientHandler(login, socket, this));
         sendUserConnectedMessage(login);
     }
 
-    public void unsubscribe(String login) {
+    public void unsubscribe(String login) throws IOException {
         clientHandlerMap.remove(login);
+        sendUserDisconectedMessage(login);
         // TODO Отправить всем подключенным пользователям сообщение, что данный пользователь отключился
+        //DONE
+
     }
 }

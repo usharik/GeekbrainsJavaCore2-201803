@@ -62,7 +62,6 @@ public class MainWindow extends JFrame implements MessageReciever {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = messageField.getText();
-                // TODO отправлять сообщение пользователю выбранному в списке userList
                 String userTo = userField.getText();
                 if (text != null && !text.trim().isEmpty()) {
                     TextMessage msg = new TextMessage(network.getLogin(), userTo, text);
