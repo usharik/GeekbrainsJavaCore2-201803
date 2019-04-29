@@ -1,7 +1,5 @@
 package ru.geekbrains.lesson6;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,54 +15,14 @@ public class EchoServer {
             while (true) {
                 System.out.println("Сервер ожидает подключения!");
                 Socket socket = serverSocket.accept();
+                Sender sender = new Sender(socket);
 
                 System.out.println("Кто-то подключился: " + socket.getInetAddress());
-
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-                System.out.print("Введите сообщение > ");
-
-                Thread thrGet = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            try {
-                                System.out.println("Новое сообщение > " + in.readUTF());
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                                break;
-                            }
-                        }
-                    }
-                });
-
-                Thread thrSend = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (scanner.hasNextLine()) {
-                            System.out.print("Введите сообщение > ");
-                            String line = scanner.nextLine();
-                            try {
-                                out.writeUTF(line);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                break;
-                            }
-                        }
-                    }
-                });
-
-
-                    thrSend.start();
-                    thrGet.start();
-
-                    thrGet.join();
-                    thrSend.join();
-
+                sender.start();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
