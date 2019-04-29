@@ -12,6 +12,9 @@ public final class MessagePatterns {
     public static final String DISCONNECT = "/disconnect";
     public static final String CONNECTED = "/connected";
     public static final String CONNECTED_SEND = CONNECTED + " %s";
+    public static final String DISCONNECTED_SEND = DISCONNECT + " %s";
+    public static final String ALLCONNECTED_USERS= "/all_connected_users";
+    public static final String ALLCONNECTED_USERS_SEND= ALLCONNECTED_USERS + "%s";
 
     public static final String MESSAGE_PREFIX = "/w";
     public static final String MESSAGE_SEND_PATTERN = MESSAGE_PREFIX + " %s %s";
@@ -48,4 +51,26 @@ public final class MessagePatterns {
             return null;
         }
     }
+
+    public static String parseDisconnectedMessage(String text) {
+        String[] parts = text.split(" ");
+        if (parts.length == 2 && parts[0].equals(DISCONNECT)) {
+            return parts[1];
+        } else {
+            System.out.println("Unknown message pattern: " + text);
+            return null;
+        }
+    }
+
+    public static String[] parseAllConnectedUsersMessage(String text) {
+        String[] parts = text.split(" ");
+        if (parts.length > 0 && parts[0].equals(ALLCONNECTED_USERS)) {
+            return parts;
+        } else {
+            System.out.println("Unknown message pattern: " + text);
+            return null;
+        }
+    }
+
+
 }
