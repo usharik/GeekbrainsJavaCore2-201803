@@ -84,6 +84,23 @@ public class ChatServer {
         }
     }
 
+    public void sendAllConectedUsers(String login) throws IOException {
+        String textToSend = "";
+        for (ClientHandler clients : clientHandlerMap.values()) {
+            if (!clients.getLogin().equals(login)) {
+                textToSend += (" " + clients.getLogin());
+            }
+        }
+        //if (!textToSend.isEmpty()) {
+            for (ClientHandler clientHandler : clientHandlerMap.values()) {
+                if (clientHandler.getLogin().equals(login)) {
+                    System.out.printf("Sending all connected users to %s%n", login);
+                    clientHandler.sendAllUsersMessage(textToSend);
+                }
+            }
+        //}
+    }
+
     private void sendUserDisconectedMessage(String login) throws IOException {
         for (ClientHandler clientHandler : clientHandlerMap.values()) {
             if (!clientHandler.getLogin().equals(login)) {

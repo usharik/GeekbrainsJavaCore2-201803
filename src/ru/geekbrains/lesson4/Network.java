@@ -60,6 +60,8 @@ public class Network implements Closeable {
 
                         // TODO добавить обработку отключения пользователя
                         // DONE
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         if (socket.isClosed()) {
@@ -80,6 +82,12 @@ public class Network implements Closeable {
         String response = in.readUTF();
         if (response.equals(AUTH_SUCCESS_RESPONSE)) {
             this.login = login;
+
+            List<String> connectedUsers = requestConnectedUserList();
+            if (connectedUsers.size() != 0) {
+                messageReciever.allConnectedUsers(connectedUsers);
+            }
+
             receiverThread.start();
         } else {
             throw new AuthException();
@@ -107,14 +115,15 @@ public class Network implements Closeable {
         sendMessage(ALLCONNECTED_USERS);
 
         String response = in.readUTF();
+        //if (!response.isEmpty()) {
+            String[] allUsersArrParsed = parseAllConnectedUsersMessage(response);
 
-        String[] allUsersArrParsed = parseAllConnectedUsersMessage(response);
+            for (int i = 1; i < allUsersArrParsed.length; i++) {
+                allConnectedUsersList.add(allUsersArrParsed[i]);
+            }
 
-        for (int i = 1; i < allUsersArrParsed.length; i++) {
-            allConnectedUsersList.add(allUsersArrParsed[i]);
-        }
-
-        return allConnectedUsersList;
+            return allConnectedUsersList;
+        //} else return null;
     }
 
     public String getLogin() {

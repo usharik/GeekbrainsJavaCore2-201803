@@ -38,7 +38,10 @@ public class ClientHandler {
                         if (msg != null) {
                             msg.swapUsers();
                             chatServer.sendMessage(msg);
-                        } else if (text.equals(DISCONNECT)) {
+                        } else if (text.equals(ALLCONNECTED_USERS)) {
+                            chatServer.sendAllConectedUsers(login);
+                        }
+                        else if (text.equals(DISCONNECT)) {
                             System.out.printf("User %s is disconnected%n", login);
                             chatServer.unsubscribe(login);
                             return;
@@ -73,6 +76,12 @@ public class ClientHandler {
     public void sendDisconnectedMessage(String login) throws IOException {
         if (socket.isConnected()) {
             out.writeUTF(String.format(DISCONNECTED_SEND, login));
+        }
+    }
+
+    public void sendAllUsersMessage(String msg) throws IOException {
+        if (socket.isConnected()) {
+            out.writeUTF(String.format(ALLCONNECTED_USERS_SEND, msg));
         }
     }
 }

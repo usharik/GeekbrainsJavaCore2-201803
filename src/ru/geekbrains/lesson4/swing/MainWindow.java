@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.List;
 
 public class MainWindow extends JFrame implements MessageReciever {
 
@@ -38,7 +39,7 @@ public class MainWindow extends JFrame implements MessageReciever {
 
     public MainWindow() {
         setTitle("Сетевой чат.");
-        setBounds(200,200, 500, 500);
+        setBounds(200, 200, 500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
@@ -141,6 +142,21 @@ public class MainWindow extends JFrame implements MessageReciever {
                 int ix = userListModel.indexOf(login);
                 if (ix >= 0) {
                     userListModel.remove(ix);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void allConnectedUsers(List<String> logins) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                for (String login :
+                        logins) {
+                    if (userListModel.indexOf(login) == -1) {
+                        userListModel.add(userListModel.size(), login);
+                    }
                 }
             }
         });
