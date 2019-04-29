@@ -1,14 +1,16 @@
 package ru.geekbrains.lesson4;
 
+import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Collections;
+import java.util.List;
 
-import static ru.geekbrains.lesson4.MessagePatterns.AUTH_PATTERN;
-import static ru.geekbrains.lesson4.MessagePatterns.MESSAGE_SEND_PATTERN;
+import static ru.geekbrains.lesson4.MessagePatterns.*;
 
-public class Network {
+public class Network implements Closeable {
 
     public Socket socket;
     public DataInputStream in;
@@ -30,15 +32,25 @@ public class Network {
         this.receiverThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                while (!Thread.currentThread().isInterrupted()) {
                     try {
                         String text = in.readUTF();
 
-                        // TODO проверить, пришло ли в строке text сообщение
-                        // TODO определить текст и отправителя
-                        TextMessage textMessage = new TextMessage("", login, "");
-                        messageReciever.submitMessage(textMessage);
+                        System.out.println("New message " + text);
+                        TextMessage msg = parseTextMessageRegx(text, login);
+                        if (msg != null) {
+                            messageReciever.submitMessage(msg);
+                            continue;
+                        }
 
+                        System.out.println("Connection message " + text);
+                        String login = parseConnectedMessage(text);
+                        if (login != null) {
+                            messageReciever.userConnected(login);
+                            continue;
+                        }
+
+                        // TODO добавить обработку отключения пользователя
                     } catch (IOException e) {
                         e.printStackTrace();
                         if (socket.isClosed()) {
@@ -57,7 +69,7 @@ public class Network {
 
         sendMessage(String.format(AUTH_PATTERN, login, password));
         String response = in.readUTF();
-        if (response.equals("/auth successful")) {
+        if (response.equals(AUTH_SUCCESS_RESPONSE)) {
             this.login = login;
             receiverThread.start();
         } else {
@@ -78,7 +90,18 @@ public class Network {
         }
     }
 
+    public List<String> requestConnectedUserList() {
+        // TODO реализовать запрос с сервера списка всех подключенных пользователей
+        return Collections.emptyList();
+    }
+
     public String getLogin() {
         return login;
+    }
+
+    @Override
+    public void close() {
+        this.receiverThread.interrupt();
+        sendMessage(DISCONNECT);
     }
 }
