@@ -60,7 +60,7 @@ public class MainWindow extends JFrame implements MessageReciever {
                 //String userTo = userToField.getText();
                 if (text != null && !text.trim().isEmpty()) {
                     if (text.startsWith("/w")) {
-                        String [] textParts = text.split(" ");
+                        String [] textParts = text.split(" ", 3);
                         userTo = textParts[1];
                         userToText = textParts[2];
                     }

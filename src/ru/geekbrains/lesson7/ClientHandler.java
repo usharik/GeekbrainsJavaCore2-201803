@@ -30,7 +30,7 @@ public class ClientHandler {
                     try {
                         String msg = inp.readUTF();
                         System.out.printf("Message from user %s: %s%n", login, msg);
-                        String [] msgParts = msg.split(" ");
+                        String [] msgParts = msg.split(" ", 3);
                         String userTo = msgParts[1];
                         String message = msgParts[2];
                         if (msg.startsWith("/w")) {

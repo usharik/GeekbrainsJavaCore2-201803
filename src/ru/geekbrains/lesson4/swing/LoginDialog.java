@@ -69,6 +69,7 @@ public class LoginDialog extends JDialog {
                 try {
                     network.authorize(tfUsername.getText(), String.valueOf(pfPassword.getPassword()));
                     connected = true;
+                    parent.setTitle(network.getLogin());
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(LoginDialog.this,
                             "Ошибка сети",

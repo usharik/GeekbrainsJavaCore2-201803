@@ -35,8 +35,8 @@ public class Network {
                         String text = in.readUTF();
                         String userFrom = null;
                         String textFromUser = null;
-                        if (text != null && !text.trim().isEmpty()) {
-                            String [] textParts = text.split(" ");
+                        if (text != null && !text.trim().isEmpty() && text.startsWith("/w")) {
+                            String [] textParts = text.split(" ", 3);
                             userFrom = textParts[1];
                             textFromUser = textParts[2];
                             TextMessage textMessage = new TextMessage(userFrom, login, textFromUser);
