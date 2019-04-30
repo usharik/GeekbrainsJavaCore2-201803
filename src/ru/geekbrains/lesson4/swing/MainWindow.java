@@ -21,6 +21,8 @@ public class MainWindow extends JFrame implements MessageReciever {
 
     private final JPanel sendMessagePanel;
 
+    //private final JTextField userToField; //поле, где указываем кому отправляем сообщение
+
     private final JButton sendButton;
 
     private final JTextField messageField;
@@ -47,24 +49,36 @@ public class MainWindow extends JFrame implements MessageReciever {
 
         sendMessagePanel = new JPanel();
         sendMessagePanel.setLayout(new BorderLayout());
+
         sendButton = new JButton("Отправить");
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = messageField.getText();
+                String userTo = null;
+                String userToText = null;
+                //String userTo = userToField.getText();
                 if (text != null && !text.trim().isEmpty()) {
-                    TextMessage msg = new TextMessage(network.getLogin(), "ivan", text);
+                    if (text.startsWith("/w")) {
+                        String [] textParts = text.split(" ");
+                        userTo = textParts[1];
+                        userToText = textParts[2];
+                    }
+                    TextMessage msg = new TextMessage(network.getLogin(), userTo, userToText);
                     messageListModel.add(messageListModel.size(), msg);
                     messageField.setText(null);
-
-                    // TODO реализовать проверку, что сообщение не пустое
+                    //userToField.setText(null);
                     network.sendTextMessage(msg);
                 }
             }
         });
         sendMessagePanel.add(sendButton, BorderLayout.EAST);
+
         messageField = new JTextField();
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
+
+//        userToField = new JTextField();
+//        sendMessagePanel.add(userToField, BorderLayout.WEST);
 
         add(sendMessagePanel, BorderLayout.SOUTH);
         setVisible(true);

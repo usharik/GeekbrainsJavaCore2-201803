@@ -73,7 +73,14 @@ public class ChatServer {
 
     public void sendMessage(String userTo, String userFrom, String msg) {
         ClientHandler userToClientHandler = clientHandlerMap.get(userTo);
-        // TODO убедиться, что userToClientHandler существует и отправить сообщение
-        // TODO для отправки сообщения нужно вызвать метод userToClientHandler.sendMessage()
+        if(userToClientHandler != null){
+            try {
+                userToClientHandler.sendMessage(userFrom, msg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.printf("Пользовтеля с %n не существует", userTo);
+        }
     }
 }

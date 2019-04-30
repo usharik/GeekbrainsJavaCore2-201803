@@ -63,25 +63,6 @@ public class LoginDialog extends JDialog {
 
         JPanel bp = new JPanel();
         bp.add(btnLogin);
-
-        pfPassword.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                    try {
-                        network.authorize(tfUsername.getText(), String.valueOf(pfPassword.getPassword()));
-                        connected = true;
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(LoginDialog.this, "Ошибка сети", "Авторизация", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    } catch (AuthException e1) {
-                        JOptionPane.showMessageDialog(LoginDialog.this, "Ошибка сети", "Авторизация", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }
-            }
-        });
-
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
