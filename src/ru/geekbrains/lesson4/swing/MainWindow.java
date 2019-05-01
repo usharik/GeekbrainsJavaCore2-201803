@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.List;
 
 public class MainWindow extends JFrame implements MessageReciever {
 
@@ -62,8 +63,8 @@ public class MainWindow extends JFrame implements MessageReciever {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = messageField.getText();
-                // TODO отправлять сообщение пользователю выбранному в списке userList
-                String userTo = userField.getText();
+                // отправлять сообщение пользователю выбранному в списке userList
+                String userTo = userListModel.getElementAt(userList.getSelectedIndex());
                 if (text != null && !text.trim().isEmpty()) {
                     TextMessage msg = new TextMessage(network.getLogin(), userTo, text);
                     messageListModel.add(messageListModel.size(), msg);
@@ -142,6 +143,22 @@ public class MainWindow extends JFrame implements MessageReciever {
                 int ix = userListModel.indexOf(login);
                 if (ix >= 0) {
                     userListModel.remove(ix);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void refreshContacts(List<String> contacts) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                userListModel.clear();
+                for (String contact: contacts
+                     ) {
+                    if (!contact.equals(network.getLogin())){
+                        userListModel.addElement(contact);
+                    }
                 }
             }
         });

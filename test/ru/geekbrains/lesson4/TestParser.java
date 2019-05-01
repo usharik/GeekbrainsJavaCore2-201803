@@ -3,8 +3,7 @@ package ru.geekbrains.lesson4;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static ru.geekbrains.lesson4.MessagePatterns.parseTextMessage;
-import static ru.geekbrains.lesson4.MessagePatterns.parseTextMessageRegx;
+import static ru.geekbrains.lesson4.MessagePatterns.*;
 
 /**
  * Unit тесты для различных методов сетевого чата
@@ -34,8 +33,29 @@ public class TestParser {
 
     @Test
     public void testParseConnectedMessage() {
-        // TODO написать тест для метода MessagePattern.ParseConnectedMessage
+        // написать тест для метода MessagePattern.ParseConnectedMessage
+        TextMessage textMessage = parseConnectedMessageToMess("/connected login");
+        assertNotNull(textMessage);
+        assertEquals("login", textMessage.getUserTo());
+        assertEquals(CONNECTED, textMessage.getMessageType());
     }
 
-    // TODO написать тесты для новых парсеров, если они будут добавлены при выполнении остальных заданий
+    // написать тесты для новых парсеров, если они будут добавлены при выполнении остальных заданий
+    @Test
+    public void parseTextForMessage() {
+        TextMessage textMessage = parseText("/w userFrom Example of message", "userTo");
+        assertNotNull(textMessage);
+        assertEquals("userFrom", textMessage.getUserFrom());
+        assertEquals("Example of message", textMessage.getText());
+        assertEquals("userTo", textMessage.getUserTo());
+    }
+
+    @Test
+    public void parseTextForContacts() {
+        TextMessage textMessage = parseText("/contacts [ivan, petr]", "userTo");
+        assertNotNull(textMessage);
+        assertEquals("chatServer", textMessage.getUserFrom());
+        assertEquals("[ivan, petr]", textMessage.getText());
+        assertEquals("userTo", textMessage.getUserTo());
+    }
 }

@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 
 import static ru.geekbrains.lesson4.MessagePatterns.*;
 
@@ -34,14 +35,19 @@ public class ClientHandler {
                         System.out.printf("Message from user %s: %s%n", login, text);
 
                         System.out.println("New message " + text);
-                        TextMessage msg = parseTextMessageRegx(text, login);
-                        if (msg != null) {
-                            msg.swapUsers();
-                            chatServer.sendMessage(msg);
-                        } else if (text.equals(DISCONNECT)) {
-                            System.out.printf("User %s is disconnected%n", login);
-                            chatServer.unsubscribe(login);
-                            return;
+                        TextMessage msg = parseText(text, login);
+                        switch (msg.getMessageType()){
+                            case MESSAGE_PREFIX:
+                                msg.swapUsers();
+                                chatServer.sendMessage(msg);
+                                break;
+                            case DISCONNECT:
+                                System.out.printf("User %s is disconnected%n", login);
+                                chatServer.unsubscribe(login);
+                                return;
+                            case CONTACTS:
+                                sendContacts(chatServer.getUserList());
+                                break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -67,6 +73,18 @@ public class ClientHandler {
     public void sendConnectedMessage(String login) throws IOException {
         if (socket.isConnected()) {
             out.writeUTF(String.format(CONNECTED_SEND, login));
+        }
+    }
+
+    public void sendContacts(List<String> contacts) throws IOException {
+        if (socket.isConnected()) {
+            out.writeUTF(String.format(CONTACTS_LIST, contacts.toString()));
+        }
+    }
+
+    public void sendDisconnectedMessage(String login) throws IOException {
+        if (socket.isConnected()) {
+            out.writeUTF(String.format(DISCONNECTED_SEND, login));
         }
     }
 }

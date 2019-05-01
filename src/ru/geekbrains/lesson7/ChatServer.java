@@ -10,9 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static ru.geekbrains.lesson4.MessagePatterns.AUTH_FAIL_RESPONSE;
 import static ru.geekbrains.lesson4.MessagePatterns.AUTH_SUCCESS_RESPONSE;
@@ -94,13 +92,25 @@ public class ChatServer {
     }
 
     public void subscribe(String login, Socket socket) throws IOException {
-        // TODO Проверить, подключен ли уже пользователь. Если да, то отправить клиенту ошибку
         clientHandlerMap.put(login, new ClientHandler(login, socket, this));
         sendUserConnectedMessage(login);
     }
 
-    public void unsubscribe(String login) {
+    public void unsubscribe(String login) throws IOException {
         clientHandlerMap.remove(login);
-        // TODO Отправить всем подключенным пользователям сообщение, что данный пользователь отключился
+        //Отправить всем подключенным пользователям сообщение, что данный пользователь отключился
+        sendUserDisconnectedMessage(login);
+    }
+    public List<String> getUserList (){
+        return  new ArrayList<String>(clientHandlerMap.keySet());
+    }
+
+    private void sendUserDisconnectedMessage(String login) throws IOException {
+        for (ClientHandler clientHandler : clientHandlerMap.values()) {
+            if (!clientHandler.getLogin().equals(login)) {
+                System.out.printf("Sending disconnect notification to %s about %s%n", clientHandler.getLogin(), login);
+                clientHandler.sendDisconnectedMessage(login);
+            }
+        }
     }
 }
