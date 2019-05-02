@@ -5,8 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static ru.geekbrains.lesson4.MessagePatterns.*;
 
@@ -37,20 +36,28 @@ public class Network implements Closeable {
                         String text = in.readUTF();
 
                         System.out.println("New message " + text);
-                        TextMessage msg = parseTextMessageRegx(text, login);
+                        TextMessage msg = parseText(text, login);
                         if (msg != null) {
-                            messageReciever.submitMessage(msg);
-                            continue;
+                            switch (msg.getMessageType()) {
+                                case MESSAGE_PREFIX:
+                                    messageReciever.submitMessage(msg);
+                                    continue;
+                                case CONTACTS:
+                                    System.out.println("Contact list : " + text);
+                                    messageReciever.refreshContacts(Arrays.asList(msg.getText().substring(1,msg.getText().length()-1).split(", ")));
+                                    continue;
+                                case CONNECTED:
+                                    System.out.println("Connection message " + text);
+                                    requestConnectedUserList();
+                                    continue;
+                                case DISCONNECT:
+                                    System.out.println("Disconnection message " + text);
+                                    requestConnectedUserList();
+                                    continue;
+                            }
                         }
 
-                        System.out.println("Connection message " + text);
-                        String login = parseConnectedMessage(text);
-                        if (login != null) {
-                            messageReciever.userConnected(login);
-                            continue;
-                        }
-
-                        // TODO добавить обработку отключения пользователя
+                        // добавить обработку отключения пользователя
                     } catch (IOException e) {
                         e.printStackTrace();
                         if (socket.isClosed()) {
@@ -72,6 +79,7 @@ public class Network implements Closeable {
         if (response.equals(AUTH_SUCCESS_RESPONSE)) {
             this.login = login;
             receiverThread.start();
+            requestConnectedUserList();
         } else {
             throw new AuthException();
         }
@@ -90,9 +98,9 @@ public class Network implements Closeable {
         }
     }
 
-    public List<String> requestConnectedUserList() {
-        // TODO реализовать запрос с сервера списка всех подключенных пользователей
-        return Collections.emptyList();
+    public void requestConnectedUserList() throws IOException {
+        // реализовать запрос с сервера списка всех подключенных пользователей
+        sendMessage(String.format(CONTACTS));
     }
 
     public String getLogin() {

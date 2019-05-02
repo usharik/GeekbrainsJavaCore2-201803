@@ -12,11 +12,18 @@ public class TextMessage {
 
     private String text;
 
+    private String messageType;
+
     public TextMessage(String userFrom, String userTo, String text) {
         this.created = LocalDateTime.now();
         this.userFrom = userFrom;
         this.userTo = userTo;
         this.text = text;
+    }
+
+    public TextMessage(String userFrom, String userTo, String text, String messageType) {
+        this(userFrom,userTo,text);
+        this.messageType = messageType;
     }
 
     public String getUserFrom() {
@@ -51,5 +58,9 @@ public class TextMessage {
         String tmp = userFrom;
         userFrom = userTo;
         userTo = tmp;
+    }
+
+    public String getMessageType() {
+        return messageType;
     }
 }
