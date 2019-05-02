@@ -15,6 +15,7 @@
   * https://habr.com/ru/post/237043/
   * https://www.scientecheasy.com/2018/09/collection-hierarchy-in-java.html
   * https://www.codejava.net/java-core/collections/overview-of-java-collections-framework-api-uml-diagram
+  * https://www.baeldung.com/java-array-add-element-at-the-end
 * UI with JavaFX and Swing
   * https://blog.idrsolutions.com/2014/05/layout-manager-swing-javafx-tutorial/
   * https://dzone.com/refcardz/javafx-8-1?chapter=1
