@@ -6,6 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ru.geekbrains.lesson4.MessagePatterns.*;
 
@@ -38,11 +40,18 @@ public class ClientHandler {
                         if (msg != null) {
                             msg.swapUsers();
                             chatServer.sendMessage(msg);
-                        } else if (text.equals(DISCONNECT)) {
+                        } else if (text.equals(DISCONNECTED)) {
                             System.out.printf("User %s is disconnected%n", login);
                             chatServer.unsubscribe(login);
                             return;
+
+                        } else if (text.equals(ONLINE)){
+                            List<String> userList = new ArrayList<>(chatServer.getUsers());
+                            String users = "";
+                            for (String s : userList) users += s + " ";
+                            sendOnlineMessage(users);
                         }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         break;
@@ -69,4 +78,17 @@ public class ClientHandler {
             out.writeUTF(String.format(CONNECTED_SEND, login));
         }
     }
+
+    public void sendDisconnectedMessage(String login) throws IOException {
+        if (socket.isConnected()) {
+            out.writeUTF(String.format(DISCONNECTED_SEND, login));
+        }
+    }
+
+    public void sendOnlineMessage(String users) throws IOException {
+        if (socket.isConnected()) {
+            out.writeUTF(String.format(ONLINE_SEND, users));
+        }
+    }
+
 }

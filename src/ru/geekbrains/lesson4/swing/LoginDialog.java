@@ -55,33 +55,22 @@ public class LoginDialog extends JDialog {
         cs.gridwidth = 2;
         panel.add(pfPassword, cs);
         panel.setBorder(new LineBorder(Color.GRAY));
+        pfPassword.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginToChat();
+            }
+        });
 
         btnLogin = new JButton("Войти");
         btnCancel = new JButton("Отмена");
 
         JPanel bp = new JPanel();
         bp.add(btnLogin);
-
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    network.authorize(tfUsername.getText(), String.valueOf(pfPassword.getPassword()));
-                    connected = true;
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
-                            "Ошибка сети",
-                            "Авторизация",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                } catch (AuthException ex) {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
-                            "Ошибка авторизации",
-                            "Авторизация",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                dispose();
+                loginToChat();
             }
         });
 
@@ -102,6 +91,25 @@ public class LoginDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
+    private void loginToChat(){
+        try {
+            network.authorize(tfUsername.getText(), String.valueOf(pfPassword.getPassword()));
+            connected = true;
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(LoginDialog.this,
+                    "Ошибка сети",
+                    "Авторизация",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (AuthException ex) {
+            JOptionPane.showMessageDialog(LoginDialog.this,
+                    "Неверное имя пользователя или пароль, либо данное пользователь уже в чате",
+                    "Авторизации",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        dispose();
+    }
     public boolean isConnected() {
         return connected;
     }
