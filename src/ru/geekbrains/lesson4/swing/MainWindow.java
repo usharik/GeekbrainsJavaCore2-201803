@@ -6,11 +6,9 @@ import ru.geekbrains.lesson4.TextMessage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.IOException;
+import java.awt.event.*;
+import java.util.List;
+
 
 public class MainWindow extends JFrame implements MessageReciever {
 
@@ -28,7 +26,7 @@ public class MainWindow extends JFrame implements MessageReciever {
 
     private final JTextField messageField;
 
-    private final JTextField userField;
+   // private final JTextField userField;
 
     private final JList<String> userList;
 
@@ -36,9 +34,10 @@ public class MainWindow extends JFrame implements MessageReciever {
 
     private final Network network;
 
+
     public MainWindow() {
         setTitle("Сетевой чат.");
-        setBounds(200,200, 500, 500);
+        setBounds(200, 200, 500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setLayout(new BorderLayout());
@@ -61,25 +60,30 @@ public class MainWindow extends JFrame implements MessageReciever {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String text = messageField.getText();
-                // TODO отправлять сообщение пользователю выбранному в списке userList
-                String userTo = userField.getText();
-                if (text != null && !text.trim().isEmpty()) {
-                    TextMessage msg = new TextMessage(network.getLogin(), userTo, text);
-                    messageListModel.add(messageListModel.size(), msg);
-                    messageField.setText(null);
-                    network.sendTextMessage(msg);
-                }
+                sendMsg();
             }
         });
         sendMessagePanel.add(sendButton, BorderLayout.EAST);
-        messageField = new JTextField();
+
+        messageField = new JTextField("Выберите пользователя для отправки сообщения...");
+        messageField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (messageField.getText().equals("Выберите пользователя для отправки сообщения..."))
+                    messageField.setText(null);
+            }
+        });
+
+        messageField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendMsg();
+            }
+        });
+        //userField = new JTextField("", 7);
+        //sendMessagePanel.add(userField, BorderLayout.WEST);
         sendMessagePanel.add(messageField, BorderLayout.CENTER);
-        userField = new JTextField("", 7);
-        sendMessagePanel.add(userField, BorderLayout.WEST);
-
         add(sendMessagePanel, BorderLayout.SOUTH);
-
         userList = new JList<>();
         userListModel = new DefaultListModel<>();
         userList.setModel(userListModel);
@@ -108,6 +112,29 @@ public class MainWindow extends JFrame implements MessageReciever {
         });
 
         setTitle("Сетевой чат. Пользователь " + network.getLogin());
+
+    }
+
+    private void sendMsg(){
+        if(messageField.getText().equals("Выберите пользователя для отправки сообщения...")){
+            messageField.setText(null);
+        }
+
+        String text = messageField.getText();
+        String userTo = userList.getSelectedValue();
+
+        if (text.isEmpty() || userTo == null || text.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(MainWindow.this,
+                    "Выберите получателя либо введите сообщение",
+                    "Ошибка",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            TextMessage msg = new TextMessage(network.getLogin(), userTo, text);
+            messageListModel.add(messageListModel.size(), msg);
+            messageField.setText(null);
+            network.sendTextMessage(msg);
+        }
     }
 
     @Override
@@ -146,4 +173,20 @@ public class MainWindow extends JFrame implements MessageReciever {
             }
         });
     }
+
+    @Override
+    public void usersOnline (List<String> users) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                userListModel.clear();
+                for (String user: users){
+                    if (!user.equals(network.getLogin())){
+                        userListModel.addElement(user);
+                    }
+                }
+            }
+        });
+    }
+
 }

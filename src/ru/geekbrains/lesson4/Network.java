@@ -1,11 +1,13 @@
 package ru.geekbrains.lesson4;
 
+import ru.geekbrains.lesson7.ChatServer;
+
 import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ru.geekbrains.lesson4.MessagePatterns.*;
@@ -25,6 +27,7 @@ public class Network implements Closeable {
     private Thread receiverThread;
 
     public Network(String hostName, int port, MessageReciever messageReciever) {
+
         this.hostName = hostName;
         this.port = port;
         this.messageReciever = messageReciever;
@@ -36,6 +39,7 @@ public class Network implements Closeable {
                     try {
                         String text = in.readUTF();
 
+                        //код ниже буду оптимизировать
                         System.out.println("New message " + text);
                         TextMessage msg = parseTextMessageRegx(text, login);
                         if (msg != null) {
@@ -44,13 +48,27 @@ public class Network implements Closeable {
                         }
 
                         System.out.println("Connection message " + text);
-                        String login = parseConnectedMessage(text);
-                        if (login != null) {
-                            messageReciever.userConnected(login);
+                        String loginCon = parseConnectedMessage(text);
+                        if (loginCon != null) {
+                            messageReciever.userConnected(loginCon);
                             continue;
                         }
 
-                        // TODO добавить обработку отключения пользователя
+                        System.out.println("Disconnection message " + text);
+                        String loginDis = parseDisconnectedMessage(text);
+                        if (loginDis != null) {
+                            messageReciever.userDisconnected(loginDis);
+                            continue;
+                        }
+
+                        List<String> online = new ArrayList<>();
+                        String[] users = parseOnlineMessage(text);
+                        for (int i = 1; i < users.length; i++) online.add(users[i]);
+                        if (users!= null) {
+                            messageReciever.usersOnline(online);
+                            continue;
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         if (socket.isClosed()) {
@@ -63,6 +81,7 @@ public class Network implements Closeable {
     }
 
     public void authorize(String login, String password) throws IOException, AuthException {
+
         socket = new Socket(hostName, port);
         out = new DataOutputStream(socket.getOutputStream());
         in = new DataInputStream(socket.getInputStream());
@@ -72,6 +91,7 @@ public class Network implements Closeable {
         if (response.equals(AUTH_SUCCESS_RESPONSE)) {
             this.login = login;
             receiverThread.start();
+            requestConnectedUserList();
         } else {
             throw new AuthException();
         }
@@ -90,9 +110,8 @@ public class Network implements Closeable {
         }
     }
 
-    public List<String> requestConnectedUserList() {
-        // TODO реализовать запрос с сервера списка всех подключенных пользователей
-        return Collections.emptyList();
+    public void requestConnectedUserList() {
+        sendMessage(ONLINE);
     }
 
     public String getLogin() {
@@ -102,6 +121,6 @@ public class Network implements Closeable {
     @Override
     public void close() {
         this.receiverThread.interrupt();
-        sendMessage(DISCONNECT);
+        sendMessage(DISCONNECTED);
     }
 }

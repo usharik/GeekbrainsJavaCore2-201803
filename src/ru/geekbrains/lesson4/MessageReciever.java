@@ -1,5 +1,7 @@
 package ru.geekbrains.lesson4;
 
+import java.util.List;
+
 public interface MessageReciever {
 
     void submitMessage(TextMessage message);
@@ -7,4 +9,6 @@ public interface MessageReciever {
     void userConnected(String login);
 
     void userDisconnected(String login);
+
+    void usersOnline(List<String> users);
 }
